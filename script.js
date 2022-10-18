@@ -18,7 +18,12 @@ function startGame() {
   displayPlayersCards(playerOneCards);
   displayPlayersCards(playerTwoCards);
 
-  console.log(shuffledDeck);
+  // Display deck on screen
+  const deckRemainingCards = document.createElement("div");
+  deckRemainingCards.innerText = shuffledDeck.length;
+  mainWrap.appendChild(deckRemainingCards);
+
+  //   console.log(shuffledDeck);
 }
 
 function displayPlayersCards(playersCards) {
