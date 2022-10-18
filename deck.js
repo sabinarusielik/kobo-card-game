@@ -44,6 +44,17 @@ class Card {
     this.suit = suit;
     this.value = value;
   }
+
+  get suitColor() {
+    return this.suit === "♥" || this.suit === "♦" ? "red" : "black";
+  }
+
+  displayCard() {
+    const card = document.createElement("div");
+    card.innerText = this.suit + this.value;
+    card.classList.add("card", "flex-center", this.suitColor);
+    return card;
+  }
 }
 
 function createDeck() {

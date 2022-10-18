@@ -1,0 +1,35 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 1rem;
+}
+
+#main-wrap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.card {
+    height: 100px;
+    font-size: 2rem;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.red {
+    color: red;
+    border: 1px red solid;
+}
+
+.black {
+    color: black;
+    border: 1px black solid;
+}
