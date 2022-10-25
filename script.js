@@ -1,8 +1,9 @@
 import Deck from "./deck.js";
+import Player from "./player.js";
 
 const mainWrap = document.getElementById("main-wrap");
 
-let playerOneCards, playerTwoCards;
+let playerOne, playerTwo;
 
 startGame();
 function startGame() {
@@ -11,23 +12,21 @@ function startGame() {
 
   // Pick first 8 cards and give 4 each player
   const startingCards = shuffledDeck.splice(0, 8);
-  playerOneCards = startingCards.slice(0, 4);
-  playerTwoCards = startingCards.slice(4, startingCards.length);
+  let playerOneCards = startingCards.slice(0, 4);
+  let playerTwoCards = startingCards.slice(4, startingCards.length);
+
+  // Create 2 players and their decks
+  playerOne = new Player(playerOneCards, 0, true);
+  playerTwo = new Player(playerTwoCards, 0, false);
+  console.log(playerOne, playerTwo);
 
   // Display both players cards on screen
-  displayPlayersCards(playerOneCards);
-  displayPlayersCards(playerTwoCards);
+  playerOne.displayPlayersCards(mainWrap);
+  playerTwo.displayPlayersCards(mainWrap);
 
   // Display deck on screen
   const deckRemainingCards = document.createElement("div");
-  deckRemainingCards.innerText = shuffledDeck.length;
+  deckRemainingCards.innerText = `Remaining cards: ${shuffledDeck.length}`;
+  deckRemainingCards.classList.add("deck", "flex-center");
   mainWrap.appendChild(deckRemainingCards);
-
-  //   console.log(shuffledDeck);
-}
-
-function displayPlayersCards(playersCards) {
-  for (let i = 0; i < playersCards.length; i++) {
-    mainWrap.appendChild(playersCards[i].displayCard());
-  }
 }
