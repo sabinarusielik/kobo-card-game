@@ -18,8 +18,6 @@ function startGame() {
   // Create 2 players and their decks
   playerOne = new Player(playerOneCards, true);
   playerTwo = new Player(playerTwoCards, false);
-  console.log(playerOne, playerTwo);
-  console.log(playerOne.sumOfCards, playerTwo.sumOfCards);
 
   // Display both players cards on screen
   playerOne.displayPlayersCards(mainWrap);
@@ -31,3 +29,6 @@ function startGame() {
   deckRemainingCards.classList.add("deck", "flex-center");
   mainWrap.appendChild(deckRemainingCards);
 }
+
+console.log(playerOne, playerTwo);
+console.log(playerOne.sumOfCards, playerTwo.sumOfCards);

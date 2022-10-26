@@ -20,14 +20,21 @@ body {
     font-size: 2rem;
 }
 
-.card-container {
+.player-container {
+   display: grid;
+   grid-template-columns: 1fr .25fr;
+   gap: 1rem;
+}
+
+.cards-container {
    display: grid;
    grid-template-columns: repeat(4, 1fr);
    gap: 1rem;
 }
 
 .card {
-    height: 100px;
+    height: 300px;
+    border-radius: 20px;
     font-size: 2rem;
 }
 
