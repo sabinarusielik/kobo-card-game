@@ -5,9 +5,12 @@ export default class Player {
   }
 
   displayPlayersCards(parentEl) {
+    const container = document.createElement("div");
+    container.classList.add("card-container");
     for (let i = 0; i < this.cards.length; i++) {
-      parentEl.appendChild(this.cards[i].displayCard());
+      container.appendChild(this.cards[i].displayCard());
     }
+    parentEl.appendChild(container);
   }
 
   get sumOfCards() {

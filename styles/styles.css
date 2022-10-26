@@ -9,16 +9,21 @@ body {
 
 #main-wrap {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr;
     gap: 1rem;
 }
 
 .deck {
-    grid-column: 1 / span 4;
     grid-row: 2;
     background-color: yellow;
     height: 100px;
     font-size: 2rem;
+}
+
+.card-container {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   gap: 1rem;
 }
 
 .card {
