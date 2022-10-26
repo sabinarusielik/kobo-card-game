@@ -40,9 +40,10 @@ export default class Deck {
 }
 
 class Card {
-  constructor(suit, value) {
+  constructor(suit, value, numberValue = assignValue(value, suit)) {
     this.suit = suit;
     this.value = value;
+    this.numberValue = numberValue;
   }
 
   get suitColor() {
@@ -63,4 +64,21 @@ function createDeck() {
       return new Card(suit, value);
     });
   });
+}
+
+function assignValue(value, suit) {
+  let outcome = Number(value) ? Number(value) : value;
+  if (typeof outcome === "number") {
+    return outcome;
+  } else if (outcome === "A") {
+    return 1;
+  } else if (outcome === "J") {
+    return 11;
+  } else if (outcome === "Q") {
+    return 12;
+  } else if (outcome === "K" && (suit === "♥" || suit === "♦")) {
+    return 0;
+  } else if (outcome === "K") {
+    return 13;
+  }
 }

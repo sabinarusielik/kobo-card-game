@@ -16,9 +16,10 @@ function startGame() {
   let playerTwoCards = startingCards.slice(4, startingCards.length);
 
   // Create 2 players and their decks
-  playerOne = new Player(playerOneCards, 0, true);
-  playerTwo = new Player(playerTwoCards, 0, false);
+  playerOne = new Player(playerOneCards, true);
+  playerTwo = new Player(playerTwoCards, false);
   console.log(playerOne, playerTwo);
+  console.log(playerOne.sumOfCards, playerTwo.sumOfCards);
 
   // Display both players cards on screen
   playerOne.displayPlayersCards(mainWrap);

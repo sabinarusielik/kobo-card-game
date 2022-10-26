@@ -1,7 +1,6 @@
 export default class Player {
-  constructor(cards, sum, turn) {
+  constructor(cards, turn) {
     this.cards = cards;
-    this.sum = sum;
     this.turn = turn;
   }
 
@@ -9,5 +8,12 @@ export default class Player {
     for (let i = 0; i < this.cards.length; i++) {
       parentEl.appendChild(this.cards[i].displayCard());
     }
+  }
+
+  get sumOfCards() {
+    let valuesArr = [];
+    this.cards.map((card) => valuesArr.push(card.numberValue));
+    let sum = valuesArr.reduce((prev, curr) => prev + curr);
+    return sum;
   }
 }
