@@ -38,6 +38,10 @@ body {
     font-size: 2rem;
 }
 
+.card-back {
+    background-color: black;
+}
+
 .flex-center {
     display: flex;
     justify-content: center;

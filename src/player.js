@@ -11,7 +11,7 @@ export default class Player {
     return sum;
   }
 
-  displayPlayersCards(parentEl) {
+  displayPlayer(parentEl) {
     const playerContainer = document.createElement("div");
     playerContainer.classList.add("player-container");
     const container = document.createElement("div");

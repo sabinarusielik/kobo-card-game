@@ -40,10 +40,11 @@ export default class Deck {
 }
 
 class Card {
-  constructor(suit, value, numberValue = assignValue(value, suit)) {
+  constructor(suit, value) {
     this.suit = suit;
     this.value = value;
-    this.numberValue = numberValue;
+    this.numberValue = assignValue(value, suit);
+    this.flipped = false;
   }
 
   get suitColor() {
@@ -53,8 +54,16 @@ class Card {
   displayCard() {
     const card = document.createElement("div");
     card.innerText = this.suit + this.value;
-    card.classList.add("card", "flex-center", this.suitColor);
+    if (this.flipped) {
+      card.classList.add("card", "flex-center", this.suitColor);
+    } else {
+      card.classList.add("card", "card-back");
+    }
     return card;
+  }
+
+  changeFlip() {
+    this.flipped = !this.flipped;
   }
 }
 

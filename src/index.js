@@ -20,8 +20,8 @@ function startGame() {
   playerTwo = new Player(playerTwoCards, false);
 
   // Display both players cards on screen
-  playerOne.displayPlayersCards(mainWrap);
-  playerTwo.displayPlayersCards(mainWrap);
+  playerOne.displayPlayer(mainWrap);
+  playerTwo.displayPlayer(mainWrap);
 
   // Display deck on screen
   const deckRemainingCards = document.createElement("div");
@@ -32,3 +32,17 @@ function startGame() {
 
 console.log(playerOne, playerTwo);
 console.log(playerOne.sumOfCards, playerTwo.sumOfCards);
+
+// Flip 2 cards of choice
+
+// const playerOneWrap = document.querySelectorAll(".cards-container")[0];
+// const playerTwoWrap = document.querySelectorAll(".cards-container")[1];
+// console.log(playerOneWrap, playerTwoWrap);
+
+// playerOneWrap.addEventListener("click", flipCard);
+// playerTwoWrap.addEventListener("click", flipCard);
+
+// function flipCard(e) {
+//   const card = e.target;
+//   card.style.border = "5px solid yellow";
+// }
