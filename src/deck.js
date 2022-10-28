@@ -54,16 +54,13 @@ class Card {
   displayCard() {
     const card = document.createElement("div");
     card.innerText = this.suit + this.value;
+    card.dataset.value = this.suit + this.value;
     if (this.flipped) {
       card.classList.add("card", "flex-center", this.suitColor);
     } else {
       card.classList.add("card", "card-back");
     }
     return card;
-  }
-
-  changeFlip() {
-    this.flipped = !this.flipped;
   }
 }
 

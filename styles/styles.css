@@ -36,10 +36,16 @@ body {
     height: 300px;
     border-radius: 20px;
     font-size: 2rem;
+    cursor: pointer;
+}
+
+.card.sum-card {
+    cursor: default;
 }
 
 .card-back {
     background-color: black;
+    user-select: none;
 }
 
 .flex-center {

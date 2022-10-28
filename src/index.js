@@ -4,9 +4,21 @@ import Player from "./player.js";
 const mainWrap = document.getElementById("main-wrap");
 const playerOneContainer = document.querySelector(".player-one-container");
 const playerTwoContainer = document.querySelector(".player-two-container");
+const playerOneCardsContainer = document.querySelector(
+  ".player-one-container .cards-container"
+);
+const playerTwoCardsContainer = document.querySelector(
+  ".player-two-container .cards-container"
+);
+const playerOneSumContainer = document.querySelector(
+  ".player-one-container .sum-card"
+);
+const playerTwoSumContainer = document.querySelector(
+  ".player-two-container .sum-card"
+);
 const deckRemainingCards = document.querySelector(".deck");
 
-let playerOne, playerTwo;
+let playerOne, playerTwo, flipCount;
 
 startGame();
 function startGame() {
@@ -23,48 +35,41 @@ function startGame() {
   playerTwo = new Player(playerTwoCards, false);
 
   // Display both players cards on screen
-  playerOneContainer.appendChild(displayPlayerCards(playerOne));
-  playerTwoContainer.appendChild(displayPlayerCards(playerTwo));
+  playerOne.displayPlayerCards(playerOneCardsContainer);
+  playerTwo.displayPlayerCards(playerTwoCardsContainer);
 
   // Display both players sums on screen
-  playerOneContainer.appendChild(displayPlayerSum(playerOne));
-  playerTwoContainer.appendChild(displayPlayerSum(playerTwo));
+  playerOne.displayPlayerSum(playerOneSumContainer);
+  playerTwo.displayPlayerSum(playerTwoSumContainer);
 
   // Display deck remaining cards on screen
   deckRemainingCards.innerText = `Remaining cards: ${shuffledDeck.length}`;
 }
 
-function displayPlayerCards(player) {
-  const cardsContainer = document.createElement("div");
-  cardsContainer.classList.add("cards-container");
-  for (let i = 0; i < player.cards.length; i++) {
-    cardsContainer.appendChild(player.cards[i].displayCard());
-  }
-  return cardsContainer;
+// Update player display
+function updatePlayerDisplay(player) {
+  const container =
+    player === playerOne ? playerOneCardsContainer : playerTwoCardsContainer;
+  container.innerHTML = "";
+  player.displayPlayerCards(container);
 }
 
-function displayPlayerSum(player) {
-  const sumCard = document.createElement("div");
-  sumCard.classList.add("sum-card", "card", "flex-center");
-  sumCard.innerText = `Sum: ${player.sumOfCards}`;
-  return sumCard;
+playerOneCardsContainer.addEventListener("click", flipCard);
+
+// Flip card of choice
+function flipCard(e) {
+  const chosenCardText = e.target.innerText;
+  console.log(chosenCardText);
+
+  const index = playerOne.cards.findIndex(
+    (({ suit }) => suit === chosenCardText[0]) &&
+      (({ value }) => value === chosenCardText[1])
+  );
+  console.log(index);
+
+  playerOne.cards[index].flipped = true;
+  updatePlayerDisplay(playerOne);
 }
 
 console.log(playerOne, playerTwo);
 console.log(playerOne.sumOfCards, playerTwo.sumOfCards);
-
-// const playerOneWrap = document.querySelectorAll(".player-container")[0];
-// const playerTwoWrap = document.querySelectorAll(".player-container")[1];
-// const playerOneCardsWrap = playerOneWrap.firstElementChild;
-// const playerTwoCardsWrap = playerTwoWrap.firstElementChild;
-
-// Flip 2 cards of choice
-// function updatePlayerDisplay(n) {
-//   playerOneCardsWrap.innerHTML = "";
-//   playerOne.cards[n].changeFlip();
-//   for (let i = 0; i < playerOne.cards.length; i++) {
-//     playerOneCardsWrap.appendChild(playerOne.cards[i].displayCard());
-//   }
-// }
-
-// updatePlayerDisplay(0);
