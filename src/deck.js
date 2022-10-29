@@ -44,7 +44,7 @@ class Card {
     this.suit = suit;
     this.value = value;
     this.numberValue = assignValue(value, suit);
-    this.flipped = false;
+    // this.flipped = false; - uncomment for 💄
   }
 
   get suitColor() {

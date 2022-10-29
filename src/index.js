@@ -56,19 +56,37 @@ function updatePlayerDisplay(player) {
 
 playerOneCardsContainer.addEventListener("click", flipCard);
 
-// Flip card of choice
+// Flip card of choice and flip back after 2s
 function flipCard(e) {
-  const chosenCardText = e.target.innerText;
-  console.log(chosenCardText);
+  // Check if user clicked on card
+  if (e.target.classList.contains("cards-container")) {
+    return;
+  }
 
-  const index = playerOne.cards.findIndex(
-    (({ suit }) => suit === chosenCardText[0]) &&
-      (({ value }) => value === chosenCardText[1])
-  );
-  console.log(index);
+  const chosenCard = e.target.dataset.value;
+  console.log(chosenCard);
 
-  playerOne.cards[index].flipped = true;
-  updatePlayerDisplay(playerOne);
+  // Decice if card is black or red
+  const color =
+    chosenCard[0] === "♥" || chosenCard[0] === "♦" ? "red" : "black";
+
+  e.target.classList.remove("card-back");
+  e.target.classList.add("flex-center", color);
+
+  setTimeout(() => {
+    e.target.classList.remove("flex-center", color);
+    e.target.classList.add("card-back");
+  }, "2000");
+
+  // Part for flipped property - not working properly 💄
+  // const index = playerOne.cards.findIndex(
+  //   (({ suit }) => suit === chosenCardText[0]) &&
+  //     (({ value }) => value === chosenCardText[1])
+  // );
+  // console.log(index);
+
+  // playerOne.cards[index].flipped = true;
+  // updatePlayerDisplay(playerOne);
 }
 
 console.log(playerOne, playerTwo);
