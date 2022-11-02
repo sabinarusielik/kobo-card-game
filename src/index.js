@@ -18,7 +18,9 @@ const playerTwoSumContainer = document.querySelector(
 );
 const deckRemainingCards = document.querySelector(".deck");
 
-let playerOne, playerTwo, flipCount;
+let playerOne,
+  playerTwo,
+  flipCount = 0;
 
 startGame();
 function startGame() {
@@ -47,17 +49,18 @@ function startGame() {
 }
 
 // Update player display
-function updatePlayerDisplay(player) {
-  const container =
-    player === playerOne ? playerOneCardsContainer : playerTwoCardsContainer;
-  container.innerHTML = "";
-  player.displayPlayerCards(container);
-}
+// function updatePlayerDisplay(player) {
+//   const container =
+//     player === playerOne ? playerOneCardsContainer : playerTwoCardsContainer;
+//   container.innerHTML = "";
+//   player.displayPlayerCards(container);
+// }
 
 playerOneCardsContainer.addEventListener("click", flipCard);
 
 // Flip card of choice and flip back after 2s
 function flipCard(e) {
+  flipCount += 1;
   // Check if user clicked on card
   if (e.target.classList.contains("cards-container")) {
     return;
@@ -66,7 +69,7 @@ function flipCard(e) {
   const chosenCard = e.target.dataset.value;
   console.log(chosenCard);
 
-  // Decice if card is black or red
+  // Decide if card is black or red
   const color =
     chosenCard[0] === "♥" || chosenCard[0] === "♦" ? "red" : "black";
 
@@ -78,15 +81,13 @@ function flipCard(e) {
     e.target.classList.add("card-back");
   }, "2000");
 
-  // Part for flipped property - not working properly 💄
-  // const index = playerOne.cards.findIndex(
-  //   (({ suit }) => suit === chosenCardText[0]) &&
-  //     (({ value }) => value === chosenCardText[1])
-  // );
-  // console.log(index);
+  console.log(flipCount);
 
-  // playerOne.cards[index].flipped = true;
-  // updatePlayerDisplay(playerOne);
+  if (flipCount === 2) {
+    playerOneCardsContainer.removeEventListener("click", flipCard);
+    flipCount = 0;
+    playerTwoCardsContainer.addEventListener("click", flipCard);
+  }
 }
 
 console.log(playerOne, playerTwo);

@@ -44,7 +44,6 @@ class Card {
     this.suit = suit;
     this.value = value;
     this.numberValue = assignValue(value, suit);
-    // this.flipped = false; - uncomment for 💄
   }
 
   get suitColor() {
@@ -55,11 +54,11 @@ class Card {
     const card = document.createElement("div");
     card.innerText = this.suit + this.value;
     card.dataset.value = this.suit + this.value;
-    if (this.flipped) {
-      card.classList.add("card", "flex-center", this.suitColor);
-    } else {
-      card.classList.add("card", "card-back");
-    }
+    // if (this.flipped) {
+    //   card.classList.add("card", "flex-center", this.suitColor);
+    // } else {
+    card.classList.add("card", "card-back");
+    // }
     return card;
   }
 }
