@@ -18,9 +18,14 @@ const playerTwoSumContainer = document.querySelector(
 );
 const deckRemainingCards = document.querySelector(".deck");
 
-let playerOne,
-  playerTwo,
-  flipCount = 0;
+let playerOne, playerTwo;
+
+let flipCount = 0;
+
+// document.addEventListener("click", () => {
+//   console.log("Document");
+//   checkForTurn();
+// });
 
 startGame();
 function startGame() {
@@ -46,47 +51,53 @@ function startGame() {
 
   // Display deck remaining cards on screen
   deckRemainingCards.innerText = `Remaining cards: ${shuffledDeck.length}`;
+
+  // Start first round
+  playerOneCardsContainer.addEventListener("click", firstCardFlip);
 }
 
-// Update player display
-// function updatePlayerDisplay(player) {
-//   const container =
-//     player === playerOne ? playerOneCardsContainer : playerTwoCardsContainer;
-//   container.innerHTML = "";
-//   player.displayPlayerCards(container);
+// Checks whose turn it is
+// function checkForTurn() {
+//   if (playerOne.turn) {
+//     playerOneCardsContainer.addEventListener("click", firstCardFlip);
+//     playerTwoCardsContainer.removeEventListener("click", firstCardFlip);
+//   } else {
+//     playerTwoCardsContainer.addEventListener("click", firstCardFlip);
+//     playerOneCardsContainer.removeEventListener("click", firstCardFlip);
+//   }
 // }
 
-playerOneCardsContainer.addEventListener("click", flipCard);
-
-// Flip card of choice and flip back after 2s
-function flipCard(e) {
+// Flip 2 cards of choice and flip back after 2s
+function firstCardFlip(e) {
+  // Add 1 to flip count
   flipCount += 1;
+
   // Check if user clicked on card
   if (e.target.classList.contains("cards-container")) {
     return;
   }
 
+  // Check if card is black or red
   const chosenCard = e.target.dataset.value;
-  console.log(chosenCard);
-
-  // Decide if card is black or red
   const color =
     chosenCard[0] === "♥" || chosenCard[0] === "♦" ? "red" : "black";
 
+  // Change classes to display front of card
   e.target.classList.remove("card-back");
   e.target.classList.add("flex-center", color);
 
+  // Flip the card back after 2 seconds
   setTimeout(() => {
     e.target.classList.remove("flex-center", color);
     e.target.classList.add("card-back");
   }, "2000");
 
-  console.log(flipCount);
-
-  if (flipCount === 2) {
-    playerOneCardsContainer.removeEventListener("click", flipCard);
-    flipCount = 0;
-    playerTwoCardsContainer.addEventListener("click", flipCard);
+  // Let the second player check their cards
+  if (flipCount >= 2 && flipCount < 4) {
+    playerOneCardsContainer.removeEventListener("click", firstCardFlip);
+    playerTwoCardsContainer.addEventListener("click", firstCardFlip);
+  } else {
+    playerTwoCardsContainer.removeEventListener("click", firstCardFlip);
   }
 }
 
