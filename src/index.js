@@ -18,9 +18,11 @@ const playerTwoSumContainer = document.querySelector(
 );
 const deckRemainingCards = document.querySelector(".deck");
 
+let deck;
+
 let playerOne, playerTwo;
 
-let flipCount = 0;
+let flipCount;
 
 // document.addEventListener("click", () => {
 //   console.log("Document");
@@ -29,11 +31,11 @@ let flipCount = 0;
 
 startGame();
 function startGame() {
-  const deck = new Deck();
-  const shuffledDeck = deck.shuffle();
+  deck = new Deck();
+  deck.shuffle();
 
   // Pick first 8 cards and give 4 each player
-  const startingCards = shuffledDeck.splice(0, 8);
+  const startingCards = deck.cards.splice(0, 8);
   let playerOneCards = startingCards.slice(0, 4);
   let playerTwoCards = startingCards.slice(4, startingCards.length);
 
@@ -50,10 +52,17 @@ function startGame() {
   playerTwo.displayPlayerSum(playerTwoSumContainer);
 
   // Display deck remaining cards on screen
-  deckRemainingCards.innerText = `Remaining cards: ${shuffledDeck.length}`;
+  updateDeckCount();
+
+  // Set flipCount to 0
+  flipCount = 0;
 
   // Start first round
   playerOneCardsContainer.addEventListener("click", firstCardFlip);
+}
+
+function updateDeckCount() {
+  deckRemainingCards.innerText = `Remaining cards: ${deck.cards.length}`;
 }
 
 // Checks whose turn it is
@@ -96,10 +105,19 @@ function firstCardFlip(e) {
   if (flipCount >= 2 && flipCount < 4) {
     playerOneCardsContainer.removeEventListener("click", firstCardFlip);
     playerTwoCardsContainer.addEventListener("click", firstCardFlip);
-  } else {
+  } else if (flipCount === 4) {
     playerTwoCardsContainer.removeEventListener("click", firstCardFlip);
+    deckRemainingCards.addEventListener("click", drawCardFromDeck);
   }
 }
 
 console.log(playerOne, playerTwo);
 console.log(playerOne.sumOfCards, playerTwo.sumOfCards);
+
+// Draw card from deck
+function drawCardFromDeck() {
+  const drawnCard = deck.draw();
+  updateDeckCount();
+  console.log(drawnCard);
+  console.log(deck);
+}

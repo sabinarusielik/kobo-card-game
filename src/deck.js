@@ -24,6 +24,10 @@ export default class Deck {
     return this.cards.length;
   }
 
+  draw() {
+    return this.cards.shift();
+  }
+
   shuffle() {
     let n = this.numberOfCards;
     let oldIndex;
@@ -35,7 +39,6 @@ export default class Deck {
       this.cards[n] = this.cards[newIndex];
       this.cards[newIndex] = oldIndex;
     }
-    return this.cards;
   }
 }
 
