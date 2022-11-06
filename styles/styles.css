@@ -15,9 +15,18 @@ body {
 
 .deck {
     grid-row: 2;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    place-items: center;
     background-color: yellow;
     height: 100px;
     font-size: 2rem;
+}
+
+.deck-drawn {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
 }
 
 .player-container {

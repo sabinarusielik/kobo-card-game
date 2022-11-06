@@ -16,7 +16,9 @@ const playerOneSumContainer = document.querySelector(
 const playerTwoSumContainer = document.querySelector(
   ".player-two-container .sum-card"
 );
-const deckRemainingCards = document.querySelector(".deck");
+const deckRemainingCardsWrap = document.querySelector(".deck");
+const deckRemainingCards = document.querySelector(".deck-remaining");
+const deckDrawnCard = document.querySelector(".deck-drawn");
 
 let deck;
 
@@ -118,6 +120,16 @@ console.log(playerOne.sumOfCards, playerTwo.sumOfCards);
 function drawCardFromDeck() {
   const drawnCard = deck.draw();
   updateDeckCount();
+  const displayCard = drawnCard.displayCard();
+  displayCard.classList.remove("card");
+  displayCard.classList.remove("card-back");
+  displayCard.classList.add(
+    displayCard.dataset.value[0] === "♥" || displayCard.dataset.value[0] === "♦"
+      ? "red"
+      : "black"
+  );
+  deckDrawnCard.innerHTML = "";
+  deckDrawnCard.appendChild(displayCard);
   console.log(drawnCard);
   console.log(deck);
 }
