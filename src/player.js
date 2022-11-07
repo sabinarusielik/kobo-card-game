@@ -12,8 +12,9 @@ export default class Player {
   }
 
   displayPlayerCards(cardsContainer) {
+    cardsContainer.innerHTML = "";
     for (let i = 0; i < this.cards.length; i++) {
-      cardsContainer.appendChild(this.cards[i].displayCard());
+      cardsContainer.appendChild(this.cards[i].displayCard(i));
     }
   }
 

@@ -53,10 +53,11 @@ class Card {
     return this.suit === "♥" || this.suit === "♦" ? "red" : "black";
   }
 
-  displayCard() {
+  displayCard(id) {
     const card = document.createElement("div");
     card.innerText = this.suit + this.value;
     card.dataset.value = this.suit + this.value;
+    card.dataset.id = id;
     // if (this.flipped) {
     //   card.classList.add("card", "flex-center", this.suitColor);
     // } else {

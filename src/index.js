@@ -19,13 +19,17 @@ const playerTwoSumContainer = document.querySelector(
 const deckRemainingCardsWrap = document.querySelector(".deck");
 const deckRemainingCards = document.querySelector(".deck-remaining");
 const deckDrawnCard = document.querySelector(".deck-drawn");
+const deckRejectedCard = document.querySelector(".deck-rejected");
 
-let deck;
+let deck,
+  drawnCardContainer,
+  rejectedCardsContainer = [];
 
 let playerOne, playerTwo;
 
 let flipCount;
 
+// Connect all
 // document.addEventListener("click", () => {
 //   console.log("Document");
 //   checkForTurn();
@@ -67,17 +71,6 @@ function updateDeckCount() {
   deckRemainingCards.innerText = `Remaining cards: ${deck.cards.length}`;
 }
 
-// Checks whose turn it is
-// function checkForTurn() {
-//   if (playerOne.turn) {
-//     playerOneCardsContainer.addEventListener("click", firstCardFlip);
-//     playerTwoCardsContainer.removeEventListener("click", firstCardFlip);
-//   } else {
-//     playerTwoCardsContainer.addEventListener("click", firstCardFlip);
-//     playerOneCardsContainer.removeEventListener("click", firstCardFlip);
-//   }
-// }
-
 // Flip 2 cards of choice and flip back after 2s
 function firstCardFlip(e) {
   // Add 1 to flip count
@@ -113,23 +106,108 @@ function firstCardFlip(e) {
   }
 }
 
-console.log(playerOne, playerTwo);
-console.log(playerOne.sumOfCards, playerTwo.sumOfCards);
-
 // Draw card from deck
 function drawCardFromDeck() {
+  // Use draw method from Deck class
   const drawnCard = deck.draw();
+
+  // Update remaining cards number on display
   updateDeckCount();
+
+  // Display drawn card and style it
   const displayCard = drawnCard.displayCard();
   displayCard.classList.remove("card");
   displayCard.classList.remove("card-back");
-  displayCard.classList.add(
-    displayCard.dataset.value[0] === "♥" || displayCard.dataset.value[0] === "♦"
-      ? "red"
-      : "black"
-  );
+
+  // Reset wrap for newly drawn card and append it
   deckDrawnCard.innerHTML = "";
   deckDrawnCard.appendChild(displayCard);
-  console.log(drawnCard);
-  console.log(deck);
+
+  // Create and append action buttons for drawn card
+  createButton(deckDrawnCard, "replace", replaceCard);
+  createButton(deckDrawnCard, "reject", rejectCard);
+
+  // Clear styles for newly drawn card wrap
+  displayCard.parentElement.classList.remove("red");
+  displayCard.parentElement.classList.remove("black");
+
+  // Update styles for newly drawn card wrap
+  let color =
+    displayCard.dataset.value[0] === "♥" || displayCard.dataset.value[0] === "♦"
+      ? "red"
+      : "black";
+  displayCard.parentElement.classList.add(color);
+
+  drawnCardContainer = drawnCard;
+}
+
+// Create button
+function createButton(parentEl, btnText, handler) {
+  const button = document.createElement("button");
+  button.innerText = btnText;
+  button.onclick = handler;
+  parentEl.appendChild(button);
+}
+
+// Replace own card with drawn one (from remaining deck)
+function replaceCard() {
+  // Replace card with index 0
+  const replacedCardArr = playerOne.cards.splice(0, 1, drawnCardContainer);
+  const replacedCard = replacedCardArr[0];
+
+  // Update sum display
+  playerOne.displayPlayerSum(playerOneSumContainer);
+
+  // Update player cards DOM
+  playerOne.displayPlayerCards(playerOneCardsContainer);
+
+  // Reject replaced card to the top of array
+  rejectedCardsContainer.unshift(replacedCard);
+
+  // Display rejected card and style it
+  const displayCard = rejectedCardsContainer[0].displayCard(0);
+  displayCard.classList.remove("card");
+  displayCard.classList.remove("card-back");
+
+  // Reset wrap for newly drawn card and append it
+  deckRejectedCard.innerHTML = "";
+  deckRejectedCard.appendChild(displayCard);
+
+  console.log(rejectedCardsContainer);
+}
+
+// Reject drawn card
+function rejectCard() {
+  console.log("Reject card");
+  rejectedCardsContainer.unshift(drawnCardContainer);
+
+  // Display rejected card and style it
+  const displayCard = rejectedCardsContainer[0].displayCard(0);
+  displayCard.classList.remove("card");
+  displayCard.classList.remove("card-back");
+
+  // Reset wrap for newly drawn card and append it
+  deckRejectedCard.innerHTML = "";
+  deckRejectedCard.appendChild(displayCard);
+
+  console.log(rejectedCardsContainer);
+}
+
+// Replace own card with drawn one (from rejected deck)
+
+// Change player turn
+// Checks whose turn it is
+// function checkForTurn() {
+//   if (playerOne.turn) {
+//     playerOneCardsContainer.addEventListener("click", firstCardFlip);
+//     playerTwoCardsContainer.removeEventListener("click", firstCardFlip);
+//   } else {
+//     playerTwoCardsContainer.addEventListener("click", firstCardFlip);
+//     playerOneCardsContainer.removeEventListener("click", firstCardFlip);
+//   }
+// }
+
+// Reject card with same value - regardless of turn
+function rejectSameValue() {
+  console.log("Reject same value");
 }
