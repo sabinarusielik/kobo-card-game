@@ -110,35 +110,54 @@ function firstCardFlip(e) {
 function drawCardFromDeck() {
   // Use draw method from Deck class
   const drawnCard = deck.draw();
+  drawnCardContainer = drawnCard;
 
   // Update remaining cards number on display
   updateDeckCount();
 
+  // Display drawn card on drawn deck
+  displayCardOnDrawnDeck();
+}
+
+// Display drawn card on drawn deck
+function displayCardOnDrawnDeck() {
   // Display drawn card and style it
-  const displayCard = drawnCard.displayCard();
+  const displayCard = drawnCardContainer.displayCard();
   displayCard.classList.remove("card");
   displayCard.classList.remove("card-back");
 
-  // Reset wrap for newly drawn card and append it
-  deckDrawnCard.innerHTML = "";
+  // Reset wrap for newly drawn card and append card
+  clearDrawnDeck();
   deckDrawnCard.appendChild(displayCard);
 
   // Create and append action buttons for drawn card
   createButton(deckDrawnCard, "replace", replaceCard);
   createButton(deckDrawnCard, "reject", rejectCard);
 
-  // Clear styles for newly drawn card wrap
-  displayCard.parentElement.classList.remove("red");
-  displayCard.parentElement.classList.remove("black");
-
   // Update styles for newly drawn card wrap
   let color =
     displayCard.dataset.value[0] === "♥" || displayCard.dataset.value[0] === "♦"
       ? "red"
       : "black";
-  displayCard.parentElement.classList.add(color);
+  deckDrawnCard.classList.add(color);
+}
 
-  drawnCardContainer = drawnCard;
+// Displays top card on rejected deck
+function displayCardOnRejectedDeck() {
+  // Display rejected card and style it
+  const displayCard = rejectedCardsContainer[0].displayCard(0);
+  displayCard.classList.remove("card");
+  displayCard.classList.remove("card-back");
+
+  // Reset wrap for container and append card
+  deckRejectedCard.innerHTML = "";
+  deckRejectedCard.appendChild(displayCard);
+}
+
+function clearDrawnDeck() {
+  deckDrawnCard.innerHTML = "";
+  deckDrawnCard.classList.remove("red");
+  deckDrawnCard.classList.remove("black");
 }
 
 // Create button
@@ -165,13 +184,9 @@ function replaceCard() {
   rejectedCardsContainer.unshift(replacedCard);
 
   // Display rejected card and style it
-  const displayCard = rejectedCardsContainer[0].displayCard(0);
-  displayCard.classList.remove("card");
-  displayCard.classList.remove("card-back");
+  displayCardOnRejectedDeck();
 
-  // Reset wrap for newly drawn card and append it
-  deckRejectedCard.innerHTML = "";
-  deckRejectedCard.appendChild(displayCard);
+  clearDrawnDeck();
 
   console.log(rejectedCardsContainer);
 }
@@ -181,14 +196,9 @@ function rejectCard() {
   console.log("Reject card");
   rejectedCardsContainer.unshift(drawnCardContainer);
 
-  // Display rejected card and style it
-  const displayCard = rejectedCardsContainer[0].displayCard(0);
-  displayCard.classList.remove("card");
-  displayCard.classList.remove("card-back");
+  displayCardOnRejectedDeck();
 
-  // Reset wrap for newly drawn card and append it
-  deckRejectedCard.innerHTML = "";
-  deckRejectedCard.appendChild(displayCard);
+  clearDrawnDeck();
 
   console.log(rejectedCardsContainer);
 }
