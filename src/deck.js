@@ -55,14 +55,11 @@ class Card {
 
   displayCard(id) {
     const card = document.createElement("div");
-    card.innerText = this.suit + this.value;
+    card.innerText = this.value;
     card.dataset.value = this.suit + this.value;
+    card.dataset.suit = this.suit;
     card.dataset.id = id;
-    // if (this.flipped) {
-    //   card.classList.add("card", "flex-center", this.suitColor);
-    // } else {
     card.classList.add("card", "card-back");
-    // }
     return card;
   }
 }

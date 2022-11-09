@@ -73,6 +73,7 @@ h2 {
     height: 100%;
     padding: var(--s-40) 0;
     overflow: hidden;
+    transition: all .5s ease;
 }
 
 .player-action {
@@ -99,11 +100,12 @@ h2 {
     font-weight: var(--fw-800);
     border-radius: 20px;
     position: relative;
+    cursor: pointer;
 }
 
 .card::after,
 .card::before {
-    content: "♥";
+    content: attr(data-suit);
     position: absolute;
     font-size: var(--s-40);
 }
@@ -120,6 +122,23 @@ h2 {
 
 .card.card-back {
     background-color: var(--green);
+    color: var(--green);
+    user-select: none;
+}
+
+.card.disabled {
+    background-color: var(--white);
+}
+
+.deck-drawn .card.disabled {
+    background-color: var(--beige);
+}
+
+.card.card-back::after,
+.card.card-back::before,
+.card.disabled::after,
+.card.disabled::before {
+    content: "";
 }
 
 .btn {
