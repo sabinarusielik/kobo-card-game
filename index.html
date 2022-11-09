@@ -10,18 +10,35 @@
   </head>
   <body>
     <div id="main-wrap">
-      <div class="player-one-container player-container">
-        <div class="cards-container"></div>
-        <div class="sum-card card flex-center"></div>
+      <div class="logo br-20 white">
+        <img src="./styles/assets/logo.svg" alt="Typographic logo of KOBO" />
       </div>
-      <div class="player-two-container player-container">
-        <div class="cards-container"></div>
-        <div class="sum-card card flex-center"></div>
+      <div class="info-belt br-20 white">Player One Turn</div>
+      <div class="menu br-20 orange">O</div>
+      <div class="deck-wrap">
+        <div class="deck-remaining">
+          <h2>Draw deck</h2>
+          <div class="card card-back"></div>
+        </div>
+        <div class="deck-rejected">
+          <h2>Rejected deck</h2>
+          <div class="card disabled"></div>
+        </div>
       </div>
-      <div class="deck">
-        <div class="deck-rejected"></div>
-        <div class="deck-remaining"></div>
-        <div class="deck-drawn"></div>
+      <div class="players-wrap br-20 white">
+        <div class="player-one-container player-container">
+          <div class="cards-container"></div>
+        </div>
+        <div class="player-action">
+          <div id="reject-btn" class="btn">reject</div>
+          <div class="deck-drawn">
+            <div class="card disabled"></div>
+          </div>
+          <div id="replace-btn" class="btn">replace</div>
+        </div>
+        <div class="player-two-container player-container">
+          <div class="cards-container"></div>
+        </div>
       </div>
     </div>
   </body>
