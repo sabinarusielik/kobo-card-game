@@ -145,6 +145,11 @@ function displayCardOnRejectedDeck() {
 
 // Replace own card with drawn one (from remaining deck)
 function replaceCard() {
+  // Check if there is drawn card in drawn card deck
+  if (deckDrawnCard.firstElementChild.classList.contains("disabled")) {
+    return;
+  }
+
   // Replace card with index 0
   const replacedCardArr = playerOne.cards.splice(0, 1, drawnCardContainer);
   const replacedCard = replacedCardArr[0];
