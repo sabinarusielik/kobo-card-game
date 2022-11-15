@@ -151,6 +151,24 @@ h2 {
     font-weight: var(--fw-700);
 }
 
+#reject-btn {
+    color: var(--orange);
+}
+
+#reject-btn:hover {
+    color: var(--beige);
+    background-color: var(--orange);
+}
+
+#replace-btn {
+    color: var(--green);
+}
+
+#replace-btn:hover {
+    color: var(--beige);
+    background-color: var(--green);
+}
+
 .br-20 {
     border-radius: 20px;
 }
@@ -203,7 +221,7 @@ h2 {
   .index-btn-wrap {
     display: flex;
     position: absolute;
-    right: var(--s-40);
+    right: 3.5rem;
     bottom: 0;
     gap: 1rem;
   }

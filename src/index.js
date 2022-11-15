@@ -105,18 +105,41 @@ function drawCardFromDeck() {
   drawnCardContainer = drawnCard;
 
   // Display drawn card on drawn deck
-  displayCardOnDrawnDeck();
+  displayCardOnDrawnDeck(drawnCardContainer);
 
   // Listen for action on drawn card
   rejectBtn.addEventListener("click", rejectCard);
   replaceBtn.addEventListener("click", showIndexButtons);
 }
 
+// Draw card from rejected
+function drawCardFromRejectedDeck() {
+  // Delete from rejected cards array
+  const rejectedCard = rejectedCardsContainer.shift();
+  console.log(rejectedCard, rejectedCardsContainer);
+  drawnCardContainer = rejectedCard;
+
+  if (rejectedCardsContainer.length === 0) {
+    const emptySlot = document.createElement("div");
+    emptySlot.classList.add("card", "disabled");
+    deckRejectedCard.removeChild(deckRejectedCard.lastElementChild);
+    deckRejectedCard.appendChild(emptySlot);
+    displayCardOnDrawnDeck(drawnCardContainer);
+    return;
+  } else {
+    // Clear rejected display and display next one
+    displayCardOnRejectedDeck();
+
+    // Display rejected drawn card on screen
+    displayCardOnDrawnDeck(drawnCardContainer);
+  }
+}
+
 // Display drawn card on drawn deck
-function displayCardOnDrawnDeck() {
+function displayCardOnDrawnDeck(cardHolder) {
   // Display drawn card and style it
-  const displayCard = drawnCardContainer.displayCard();
-  const color = drawnCardContainer.suitColor;
+  const displayCard = cardHolder.displayCard();
+  const color = cardHolder.suitColor;
   displayCard.classList.remove("card-back");
   displayCard.classList.add(color);
 
@@ -137,6 +160,7 @@ function displayCardOnRejectedDeck() {
   const color = rejectedCardsContainer[0].suitColor;
   displayCard.classList.remove("card-back");
   displayCard.classList.add(color);
+  displayCard.addEventListener("click", drawCardFromRejectedDeck);
 
   // Reset wrap for container and append card
   deckRejectedCard.removeChild(deckRejectedCard.lastElementChild);
@@ -165,6 +189,7 @@ function showIndexButtons() {
       chosenIndex = e.target.dataset.id;
       replaceCard(chosenIndex);
       clearDrawnDeckToDisabled();
+      indexBtnContainer.remove();
     });
     indexBtnContainer.appendChild(indexBtn);
   }
@@ -201,8 +226,6 @@ function rejectCard() {
 
   console.log(rejectedCardsContainer);
 }
-
-// Replace own card with drawn one (from rejected deck)
 
 // Reject card with same value - regardless of turn
 function rejectSameValue() {
