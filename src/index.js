@@ -85,16 +85,16 @@ function firstCardFlip(e) {
   // Let the second player check their cards
   if (flipCount >= 2 && flipCount < 4) {
     playerOneCardsContainer.removeEventListener("click", firstCardFlip);
-    playerTwoCardsContainer.addEventListener("click", firstCardFlip);
     setTimeout(() => {
       playersWrap.style.alignContent = "end";
-    }, "2000");
+      playerTwoCardsContainer.addEventListener("click", firstCardFlip);
+    }, "3000");
   } else if (flipCount === 4) {
     playerTwoCardsContainer.removeEventListener("click", firstCardFlip);
     deckRemainingCards.addEventListener("click", drawCardFromDeck);
     setTimeout(() => {
       playersWrap.style.alignContent = "start";
-    }, "2000");
+    }, "3000");
   }
 }
 
@@ -109,7 +109,7 @@ function drawCardFromDeck() {
 
   // Listen for action on drawn card
   rejectBtn.addEventListener("click", rejectCard);
-  replaceBtn.addEventListener("click", replaceCard);
+  replaceBtn.addEventListener("click", showIndexButtons);
 }
 
 // Display drawn card on drawn deck
@@ -144,14 +144,34 @@ function displayCardOnRejectedDeck() {
 }
 
 // Replace own card with drawn one (from remaining deck)
-function replaceCard() {
-  // Check if there is drawn card in drawn card deck
+function showIndexButtons() {
   if (deckDrawnCard.firstElementChild.classList.contains("disabled")) {
     return;
   }
 
-  // Replace card with index 0
-  const replacedCardArr = playerOne.cards.splice(0, 1, drawnCardContainer);
+  const indexBtnContainer = document.createElement("div");
+  indexBtnContainer.classList.add("index-btn-wrap");
+  replaceBtn.after(indexBtnContainer);
+
+  let chosenIndex;
+
+  // Replace card with chosen index
+  for (let i = 0; i < playerOne.cards.length; i++) {
+    const indexBtn = document.createElement("div");
+    indexBtn.classList.add("index-btn");
+    indexBtn.dataset.id = i;
+    indexBtn.innerText = i + 1;
+    indexBtn.addEventListener("click", (e) => {
+      chosenIndex = e.target.dataset.id;
+      replaceCard(chosenIndex);
+      clearDrawnDeckToDisabled();
+    });
+    indexBtnContainer.appendChild(indexBtn);
+  }
+}
+
+function replaceCard(i) {
+  const replacedCardArr = playerOne.cards.splice(i, 1, drawnCardContainer);
   const replacedCard = replacedCardArr[0];
 
   // Update player cards DOM
@@ -163,14 +183,16 @@ function replaceCard() {
   // Display rejected card and style it
   displayCardOnRejectedDeck();
 
-  clearDrawnDeckToDisabled();
-
   console.log(rejectedCardsContainer);
 }
 
 // Reject drawn card
 function rejectCard() {
-  console.log("Reject card");
+  // Check if there is drawn card in drawn card deck
+  if (deckDrawnCard.firstElementChild.classList.contains("disabled")) {
+    return;
+  }
+
   rejectedCardsContainer.unshift(drawnCardContainer);
 
   displayCardOnRejectedDeck();
