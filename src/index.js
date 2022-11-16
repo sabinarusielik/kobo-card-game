@@ -179,7 +179,7 @@ function showIndexButtons() {
 
   let chosenIndex;
 
-  // Replace card with chosen index
+  // Create index buttons
   for (let i = 0; i < playerOne.cards.length; i++) {
     const indexBtn = document.createElement("div");
     indexBtn.classList.add("index-btn");
@@ -227,7 +227,34 @@ function rejectCard() {
   console.log(rejectedCardsContainer);
 }
 
+document.addEventListener("keydown", (e) => rejectSameValue(e));
+
 // Reject card with same value - regardless of turn
-function rejectSameValue() {
-  console.log("Reject same value");
+function rejectSameValue(e) {
+  if (!e.repeat) {
+    console.log("Reject same value");
+    let i = checkForKeyIndex(e);
+
+    replaceCard(i);
+
+    // Check index of chosen card
+    // Check value of chosen card
+    // Check value of top rejected card
+    // If checks reject the card and update player DOM
+    // If not draw an extra card and update player DOM
+  } else {
+    return;
+  }
+}
+
+function checkForKeyIndex(e) {
+  return e.key === "a" || e.key === "1"
+    ? "0"
+    : e.key === "s" || e.key === "2"
+    ? "1"
+    : e.key === "d" || e.key === "3"
+    ? "2"
+    : e.key === "f" || e.key === "4"
+    ? "3"
+    : "";
 }
